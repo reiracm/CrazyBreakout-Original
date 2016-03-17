@@ -10,17 +10,27 @@ import java.net.Socket;
 public class Servidor {
 
 	private String valid = "[0-9]+:[0-9A-Za-z\\s]+";
-	
+	//Variable para establecer conexión con el cliente
 	private ServerSocket server;
+	//ARreglo para una cantidad de clientes ilimitada al servidor
 	private Cliente clientes[];
+	//Lector de la entrada de datos
 	private BufferedReader in;
+	//Booleano para iniciar el hilo
 	boolean isAlive = true;
+	//Indice para agregar nuevos clientes
 	private int index = 0;
 	
+	/**
+	 * Este constructor crea el Servidor. Obtiene la dirección IP
+	 * y el puerto
+	 * @param clNum
+	 */
 	public Servidor(int clNum){
 		//Crear el server
 		clientes = new Cliente [clNum];
 		try {
+			//Crea el nuevo servidor
 			server = new ServerSocket(12345);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,6 +63,11 @@ public class Servidor {
 		startConsole();
 	}
 	
+	/**
+	 * Este método posee un hilo dentro del cual ocurre el envío y
+	 * lectura de información que viene por parte del cliente. 
+	 * 
+	 */
 	public void startConsole(){
 		Thread t = new Thread(){
 			public void run(){
@@ -66,6 +81,10 @@ public class Servidor {
 						e.printStackTrace();
 					}
 					try {
+						/**
+						 * Mientras la cantidad de bytes sea mayor a cero,
+						 * leerá esa información
+						 */
 						if(in.available() > 0){
 							String strIn = brIn.readLine();
 							if(strIn.matches(valid)){
@@ -86,6 +105,10 @@ public class Servidor {
 				
 	}
 	
+	/**
+	 * Al servidor se le asigna el puerto 12345
+	 * @param args
+	 */
 	public static void main(String[] args){
 		Servidor server = new Servidor(12345);
 	}

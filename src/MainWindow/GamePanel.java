@@ -51,6 +51,7 @@ public class GamePanel extends JPanel{
 	private JLabel lblBall5;
 	
 	private int magenta = 0;
+	
 	/**
 	 * Create the panel.
 	 */
